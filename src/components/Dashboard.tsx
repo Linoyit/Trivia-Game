@@ -22,20 +22,17 @@ const Dashboard: React.FC = () => {
     const SECOND_ANS_INDEX = '2';
     const THIRD_ANS_INDEX = '3';
     const FORTH_ANS_INDEX = '4';
-
-    const checkUrl = () => {
-        let urlIndex = index;
+    
+    let urlIndex = index;
    
-        if (params.id) {
-            urlIndex = parseInt(params.id) - 1;
-        }
-        
-        dispatch(setIndex(urlIndex));
-        if (!list[index]) {
-            return <p>Item {params.id} not found!</p>;
-        }   
+    if (params.id) {
+        urlIndex = parseInt(params.id) - 1;
     }
-    checkUrl();
+    
+    dispatch(setIndex(urlIndex));
+    if (!list[index]) {
+        return <p>Item {params.id} not found!</p>;
+    }  
 
     const onOptionClick = (text: string) => {
         addUserAnswer(text);
