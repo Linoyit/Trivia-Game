@@ -3,7 +3,7 @@ import Navigate from './Navigate';
 import ProgressBar from './ProgressBar';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { incrementCount, setIndex, setUserAnswer } from '../store/triviaSlice';
+import { calculateScore, setIndex, setUserAnswer } from '../store/triviaSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { H1 } from '../utils/emotions';
 
@@ -23,17 +23,19 @@ const Dashboard: React.FC = () => {
     const THIRD_ANS_INDEX = '3';
     const FORTH_ANS_INDEX = '4';
 
-    let urlIndex = index;
-    if (params.id) {
-        urlIndex = parseInt(params.id) - 1;
+    const checkUrl = () => {
+        let urlIndex = index;
+   
+        if (params.id) {
+            urlIndex = parseInt(params.id) - 1;
+        }
+        
+        dispatch(setIndex(urlIndex));
+        if (!list[index]) {
+            return <p>Item {params.id} not found!</p>;
+        }   
     }
-
-    dispatch(setIndex(urlIndex));
-    const request = list[index];
-    
-    if (!request) {
-        return <p>Item {params.id} not found!</p>;
-    }    
+    checkUrl();
 
     const onOptionClick = (text: string) => {
         addUserAnswer(text);
@@ -59,15 +61,8 @@ const Dashboard: React.FC = () => {
         dispatch(setUserAnswer(result));
     }
 
-  const countCorrectAnswer = () => {
-    const question = list[index];
-    if (question.userAnswer === question.answerIndex) {
-        dispatch(incrementCount())
-    }
-  }
-
   const onButtonClick = (text: string) => {
-    countCorrectAnswer();   
+    const summaryUrl = '../../summary'
     const size = list.length;
     let question = index + 1;
     switch(text) {
@@ -78,7 +73,8 @@ const Dashboard: React.FC = () => {
             navigate(`../${(question % size) + 1}`);
             break;
         case SUBMIT:
-            navigate(`../../summary`);
+            dispatch(calculateScore());
+            navigate(`${summaryUrl}`);
       }
   }
 

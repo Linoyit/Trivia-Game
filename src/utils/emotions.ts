@@ -55,29 +55,11 @@ fontFamily: 'Roboto Slab'
 
 `
 
-// export const ProgressBarContainer = styled.div`
-// background-color: white;
-// width: 330px;
-// border-radius: 10px;
-// height: 40px;
-// padding: 15px;
-// margin: 10px;
-// `
-
-// export const NavigateContainer = styled.div`
-// background-color: white;
-// width: 330px;
-// border-radius: 10px;
-// height: 40px;
-// padding: 15px;
-// margin: 10px;
-// `
-
-// export const Container = styled.div`
-// background-color: white;
-// width: 330px;
-// border-radius: 10px;
-// height: 300px;
-// padding: 15px;
-// margin: 10px;
-// `
+export const SummaryStyle = styled.div`
+    display: flex;
+    flexFlow: column wrap;
+    alignItems: center;
+    alignContent: center;
+    justifyContent: center;
+    marginTop: 50px
+`

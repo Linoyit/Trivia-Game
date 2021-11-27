@@ -4,11 +4,11 @@ import { Text } from "../utils/emotions";
 
 const ProgressBar: React.FC = () => {
     const length = useAppSelector((state) => state.trivia.items.length);
-    const count = useAppSelector((state) => state.trivia.count);
+    const index = useAppSelector((state) => state.trivia.index);
     
     return (
        <div>
-           <Text> Question: {count} / {length} </Text>
+           <Text> Question: {index + 1} / {length} </Text>
        </div>
     );
 }

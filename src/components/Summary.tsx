@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { resetUserAnswers, setCount, setIndex } from "../store/triviaSlice";
 
 const Summary: React.FC = () => {
+    const dispatch = useAppDispatch();
     const length = useAppSelector((state) => state.trivia.items.length);
     const count = useAppSelector((state) => state.trivia.count);
-    const dispatch = useAppDispatch();
+    console.log("count", count);
     const navigate = useNavigate(); 
 
     function handleClick() {
@@ -23,11 +24,10 @@ const Summary: React.FC = () => {
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: '50px'
-          
     }
 
     return (
-        <div className="summary" style={style}>
+        <div style={style}>
             <h1>Congratulations!!</h1>
             <p>You answered correctly on {count} / {length} Questions</p>
             <button onClick={handleClick}>Play again</button>
