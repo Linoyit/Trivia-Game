@@ -23,18 +23,6 @@ const Question: React.FC<IProps> = ({onOptionClick}) => {
                         text={answer} 
                         onOptionClick={onOptionClick} />)
                 }
-                {/* <Option
-                        text={answers[0]} 
-                        onOptionClick={onOptionClick} />
-                <Option 
-                        text={triviaQuestion.second} 
-                        onOptionClick={onOptionClick} />
-                <Option 
-                        text={triviaQuestion.third} 
-                        onOptionClick={onOptionClick} />
-                <Option 
-                        text={triviaQuestion.forth} 
-                        onOptionClick={onOptionClick} /> */}
             </ul>
         </div>
     );

@@ -1,17 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 interface question {
   id: string;
   question: string;
   answers: Array<string>
-  answerIndex: string;
-  userAnswer: string;
+  answerIndex: number;
 }
 
 export interface TriviaState {
   items: Array<question>;
-  userSelection: Array<number>;
+  userSelections: Array<number>;
   index: number;
   count: number;
 }
@@ -22,39 +20,34 @@ const initialState: TriviaState = {
       id: "0",
       question: "Which animal can fly?",
       answers:["bird", "cat", "dog", "monkey"],
-      answerIndex: "1",
-      userAnswer: "-1",
+      answerIndex: 1,
     },
     {
       id: "1",
       question: "What is my favorite food?",
       answers:["Pizza", "Ice-Cream", "Toast", "Sushi"],
-      answerIndex: "2",
-      userAnswer: "-1",
+      answerIndex: 2,
     },
     {
       id: "2",
       question: "What is my name?",
       answers:["Orel", "May", "Rina", "Linoy"],
-      answerIndex: "4",
-      userAnswer: "-1",
+      answerIndex: 4,
     },
     {
       id: "3",
       question: "What is my favorite color?",
       answers:["blue", "red", "green", "yellow"],
-      answerIndex: "3",
-      userAnswer: "-1",
+      answerIndex: 3,
     },
     {
       id: "4",
       question: "What is my favorite country?",
       answers:["Israel", "Israel", "Paris", "Portugal"],
-      answerIndex: "1",
-      userAnswer: "-1",
+      answerIndex: 1,
     },
   ],
-  userSelection: [],
+  userSelections: [-1, -1, -1, -1, -1],
   index: 0,
   count: 0,
 };
@@ -74,20 +67,23 @@ export const triviaSlice = createSlice({
     setUserAnswer: (state, action: PayloadAction<string>) => {
       const question = state.items.find((item) => item.id === "" + state.index);
       if (question) {
-        question.userAnswer = action.payload;
+        state.userSelections[state.index] = parseInt(action.payload);
       }
     },
 
     resetUserAnswers: (state) => {
-      state.items.forEach((question) => {
-        question.userAnswer = "-1";
-      });
+      for(let i = 0; i < state.userSelections.length; i++){
+        state.userSelections[i] = -1;
+      }
       state.count = 0;
     },
 
     calculateScore: (state) => {
+      let i = 0;
       state.items.forEach((item) => {
-        if (item.userAnswer === item.answerIndex) state.count += 1;
+        if (state.userSelections[i++] === item.answerIndex) {
+          state.count += 1;
+        }
       });
     },
   },
