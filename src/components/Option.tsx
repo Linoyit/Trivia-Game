@@ -17,19 +17,11 @@ const Option: React.FC<IProps> = ({text, onOptionClick}) => {
     const HOVERED_BTN_COLOR = 'rgb(69, 79, 82)';
 
     const getClickedOption = () => {
-        switch(userSelection) {
-            case '1':
-                return question.first;
-            case '2':
-                return question.second;
-            case '3':
-                return question.third;
-            case '4':
-                return question.forth;
-        }
+        return question.answers[parseInt(userSelection)]
     }
 
     let color = getClickedOption() === text? CLICKED_BTN_COLOR : DEFAULT_BTN_COLOR;
+    
     const ButtonStyle = styled.button`
     padding: 10px;
     background-color: ${color};

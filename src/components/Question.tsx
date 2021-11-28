@@ -11,13 +11,20 @@ const Question: React.FC<IProps> = ({onOptionClick}) => {
     const list = useAppSelector((state) => state.trivia.items);
     const index = useAppSelector((state) => state.trivia.index);
     const triviaQuestion = list[index];
-    
+    const answers = triviaQuestion.answers;
+
     return (
         <div>
             <H3>{triviaQuestion.question}</H3>
             <ul style={{listStyle: 'none'}}>
-                <Option
-                        text={triviaQuestion.first} 
+                {
+                    answers.map((answer) =>
+                    <Option
+                        text={answer} 
+                        onOptionClick={onOptionClick} />)
+                }
+                {/* <Option
+                        text={answers[0]} 
                         onOptionClick={onOptionClick} />
                 <Option 
                         text={triviaQuestion.second} 
@@ -27,7 +34,7 @@ const Question: React.FC<IProps> = ({onOptionClick}) => {
                         onOptionClick={onOptionClick} />
                 <Option 
                         text={triviaQuestion.forth} 
-                        onOptionClick={onOptionClick} />
+                        onOptionClick={onOptionClick} /> */}
             </ul>
         </div>
     );

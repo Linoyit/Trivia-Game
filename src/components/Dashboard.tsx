@@ -18,10 +18,6 @@ const Dashboard: React.FC = () => {
     const BUTTON_BACK = 'back';
     const SUBMIT = 'submit';
     const DEFAULT_INDEX = '-1';
-    const FIRST_ANS_INDEX = '1';
-    const SECOND_ANS_INDEX = '2';
-    const THIRD_ANS_INDEX = '3';
-    const FORTH_ANS_INDEX = '4';
     
     let urlIndex = index;
    
@@ -40,20 +36,13 @@ const Dashboard: React.FC = () => {
 
     const addUserAnswer = (text: string) => {
         const question = list[index];
+        const answers = question.answers;
         let result = DEFAULT_INDEX;
-        switch(text) {
-            case question.first:
-                result = FIRST_ANS_INDEX;
+        for (let i = 0; i < answers.length; i++) {
+            if (answers[i] === text) {
+                result = '' + i;
                 break;
-            case question.second:
-                result = SECOND_ANS_INDEX;
-                break;
-            case question.third:
-                result = THIRD_ANS_INDEX;
-                break;
-            case question.forth:
-                result = FORTH_ANS_INDEX;
-                break;
+            }
         }
         dispatch(setUserAnswer(result));
     }
