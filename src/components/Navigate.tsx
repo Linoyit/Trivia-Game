@@ -1,28 +1,41 @@
 import React from "react";
-import { Button, Div, Submit } from '../utils/emotions';
+import { useParams } from "react-router-dom";
+import { Div, getButtonStyle, Submit } from "../utils/emotions";
+import { colors } from "../utils/useStaticVariables";
+import { useTriviaCollection } from "./useTriviaCollection";
 
 interface IProps {
-    onButtonClick: Function
+  onButtonClick: Function;
 }
 
-const Navigate: React.FC<IProps> = ({onButtonClick}) => {
-    
-    function handleClick(text: string) {
-        onButtonClick(text);
-    }
- 
-    return (
-        <>
-        <Div>
-            <Button onClick={() => handleClick('back')}>Back</Button>
-            <Button onClick={() => handleClick('next')}>Next</Button>
-        </Div>
-        <Div>
-            <Submit onClick={() => handleClick('submit')}>Submit</Submit>
-        </Div>
-        </>
-    );
-}
+const Navigate: React.FC<IProps> = ({ onButtonClick }) => {
+  const { list } = useTriviaCollection();
+  const params = useParams();
+  const numOfQuestion = params.id ? parseInt(params.id) : 1;
+  const nextBtnDisabled = numOfQuestion === list.length;
+  const backBtnDisabled = numOfQuestion === 1;
 
-export default Navigate
+  const handleClick = (text: string) => {
+    onButtonClick(text);
+  };
 
+  const Button = getButtonStyle(colors.default, colors.hover);
+
+  return (
+    <div>
+      <Div>
+        <Button disabled={backBtnDisabled} onClick={() => handleClick("back")}>
+          Back
+        </Button>
+        <Button disabled={nextBtnDisabled} onClick={() => handleClick("next")}>
+          Next
+        </Button>
+      </Div>
+      <Div>
+        <Submit onClick={() => handleClick("submit")}>Submit</Submit>
+      </Div>
+    </div>
+  );
+};
+
+export default Navigate;

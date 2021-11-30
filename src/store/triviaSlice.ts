@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface question {
+export interface question {
   id: string;
   question: string;
   answers: Array<string>
@@ -31,7 +31,7 @@ export const fetchTriviaQuestions = createAsyncThunk(
 
 const initialState: TriviaState = {
   items: [],
-  userSelections: [-1, -1, -1, -1, -1],
+  userSelections: [],
 };
 
 export const triviaSlice = createSlice({
@@ -60,6 +60,7 @@ export const triviaSlice = createSlice({
     builder
     .addCase(fetchTriviaQuestions.fulfilled, (state, action:PayloadAction<question[]>) => {
         state.items = action.payload;
+        state.userSelections = new Array<number>(state.items.length).fill(-1);
     });
   }
 });

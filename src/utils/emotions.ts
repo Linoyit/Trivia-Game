@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { colors } from "./useStaticVariables";
 
 export const H1 = styled.h1`
   font-family: "Roboto Slab", serif;
@@ -10,32 +11,30 @@ export const H3 = styled.h3`
   text-align: center;
   font-family: "Roboto Slab", serif;
 `;
-const HOVERED_BTN_COLOR = "rgb(69, 79, 82)";
-const DEFAULT_BTN_COLOR = "rgb(255 181 46)";
 
-export const Button = styled.button`
-  padding: 10px;
-  background-color: ${DEFAULT_BTN_COLOR};
-  border-radius: 10px;
-  color: black;
-  font-size: 14px;
-  text-align: center;
-  font-family: "Roboto Slab", serif;
-  margin: 5px;
-  box-shadow: 1px 3px #888888;
-  width: 80px;
-  &:hover {
-    color: white;
-    background-color: ${HOVERED_BTN_COLOR};
-  }
-`;
+export const getButtonStyle = (color: string, hover: string) => {
+  return styled.button`
+    padding: 10px;
+    background-color: ${color};
+    border-radius: 10px;
+    color: black;
+    font-size: 16px;
+    font-family: 'Roboto Slab', serif;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    width:150px;
+    &:hover {
+        color: white;
+        background-color: ${hover};
+    }
+  `
+}
 
 export const Submit = styled.button`
   padding: 10px;
-  background-color: ${DEFAULT_BTN_COLOR};
+  background-color: ${colors.default};
   border-radius: 10px;
   color: black;
-  text-align: center;
   font-size: 20px;
   font-family: "Roboto Slab", serif;
   box-shadow: 1px 3px #888888;
@@ -43,7 +42,7 @@ export const Submit = styled.button`
   text-align: center;
   &:hover {
     color: white;
-    background-color: ${HOVERED_BTN_COLOR};
+    background-color: ${colors.hover};
   }
 `;
 
@@ -54,16 +53,21 @@ export const listItem = styled.li`
 export const Div = styled.div`
   text-align: center;
 `;
+
 export const Text = styled.p`
-  fontfamily: "Roboto Slab";
+  font-family: "Roboto Slab";
   text-align: center;
+  font-size: 20px;
+`;
+
+export const Ul = styled.ul`
+  padding: 0;
+  text-align: center;
+  list-style: none;
 `;
 
 export const SummaryStyle = styled.div`
-  display: flex;
-  flexflow: column wrap;
-  alignitems: center;
-  aligncontent: center;
-  justifycontent: center;
-  margintop: 50px;
+
+  text-align: center;
+  margin-top: 50px;
 `;

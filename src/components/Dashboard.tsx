@@ -5,7 +5,7 @@ import ProgressBar from './ProgressBar';
 import { useAppDispatch } from '../store/hooks';
 import { calculateScore, setUserAnswer, UserAnswer } from '../store/triviaSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Div, H1 } from '../utils/emotions';
+import { H1 } from '../utils/emotions';
 import { useTriviaCollection } from './useTriviaCollection';
 import { useStaticVariables } from '../utils/useStaticVariables';
 
@@ -18,9 +18,10 @@ const Dashboard: React.FC = () => {
     const params = useParams();
     const numOfQuestion = params.id? parseInt(params.id) : 1;
     const questionIndex = numOfQuestion - 1;
+    
     const onOptionClick = (text: string) => {
-        const question = list[numOfQuestion - 1];
-        const answers = question.answers;
+        const currentQuestion = list[questionIndex];
+        const answers = currentQuestion.answers;
         let result = DEFAULT_INDEX;
         for (let i = 0; i < answers.length; i++) {
             if (answers[i] === text) {
@@ -38,13 +39,12 @@ const Dashboard: React.FC = () => {
   const onButtonClick = (text: string) => {
     const submitEndpoint = '../../summary'
     const size = list.length;
-    let question = numOfQuestion;
     switch(text) {
         case BUTTON_BACK:
             navigate(`../${((questionIndex + size - 1) % size) + 1}`);
             break;
         case BUTTON_NEXT:
-            navigate(`../${(question % size) + 1}`);
+            navigate(`../${(numOfQuestion % size) + 1}`);
             break;
         case SUBMIT:
             dispatch(calculateScore());

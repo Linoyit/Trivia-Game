@@ -12,10 +12,14 @@ const NavBar: React.FC = () => {
     const listStyle = {
         paddingLeft: '10px',
         paddingRight: '10px',
+        fontSize: '20px',
+        
+
     }
 
     const navStyle = {
         color: 'rgb(216, 158, 0)',
+        textDecoration: 'none'
     }
 
     return (
