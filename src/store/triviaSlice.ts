@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface question {
   id: string;
@@ -10,64 +10,39 @@ interface question {
 export interface TriviaState {
   items: Array<question>;
   userSelections: Array<number>;
-  index: number;
-  count: number;
 }
 
+export interface UserAnswer {
+  questionId: number,
+  optionIndex: number
+}
+
+const DATA_ENDPOINT = '/data.json';
+
+export const fetchTriviaQuestions = createAsyncThunk(
+  'trivia/fetchCollection',
+  async () => {
+    const response = await fetch(DATA_ENDPOINT);
+    
+    const dataAsJson = await response.json();
+    return dataAsJson;
+  }
+);
+
 const initialState: TriviaState = {
-  items: [
-    {
-      id: "0",
-      question: "Which animal can fly?",
-      answers:["bird", "cat", "dog", "monkey"],
-      answerIndex: 1,
-    },
-    {
-      id: "1",
-      question: "What is my favorite food?",
-      answers:["Pizza", "Ice-Cream", "Toast", "Sushi"],
-      answerIndex: 2,
-    },
-    {
-      id: "2",
-      question: "What is my name?",
-      answers:["Orel", "May", "Rina", "Linoy"],
-      answerIndex: 4,
-    },
-    {
-      id: "3",
-      question: "What is my favorite color?",
-      answers:["blue", "red", "green", "yellow"],
-      answerIndex: 3,
-    },
-    {
-      id: "4",
-      question: "What is my favorite country?",
-      answers:["Israel", "Israel", "Paris", "Portugal"],
-      answerIndex: 1,
-    },
-  ],
+  items: [],
   userSelections: [-1, -1, -1, -1, -1],
-  index: 0,
-  count: 0,
 };
 
 export const triviaSlice = createSlice({
   name: "trivia",
   initialState,
   reducers: {
-    setCount: (state, action: PayloadAction<number>) => {
-      state.count = action.payload;
-    },
 
-    setIndex: (state, action: PayloadAction<number>) => {
-      state.index = action.payload;
-    },
-
-    setUserAnswer: (state, action: PayloadAction<string>) => {
-      const question = state.items.find((item) => item.id === "" + state.index);
+    setUserAnswer: (state, action: PayloadAction<UserAnswer>) => {
+      const question = state.items.find((item) => item.id === '' + action.payload.questionId);
       if (question) {
-        state.userSelections[state.index] = parseInt(action.payload);
+        state.userSelections[action.payload.questionId] = action.payload.optionIndex;
       }
     },
 
@@ -75,27 +50,27 @@ export const triviaSlice = createSlice({
       for(let i = 0; i < state.userSelections.length; i++){
         state.userSelections[i] = -1;
       }
-      state.count = 0;
     },
 
     calculateScore: (state) => {
-      let i = 0;
-      state.items.forEach((item) => {
-        if (state.userSelections[i++] === item.answerIndex) {
-          state.count += 1;
-        }
-      });
+      
     },
   },
+  extraReducers: (builder) => {
+    builder
+    .addCase(fetchTriviaQuestions.fulfilled, (state, action:PayloadAction<question[]>) => {
+        state.items = action.payload;
+    });
+  }
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  setCount,
-  setIndex,
   setUserAnswer,
   resetUserAnswers,
   calculateScore,
 } = triviaSlice.actions;
 
 export default triviaSlice.reducer;
+
+

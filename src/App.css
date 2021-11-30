@@ -1,13 +1,9 @@
-.container {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  align-content: space-around;
-  justify-content: center;
-}
+/* .container {
+  display: 50%;
+  margin: auto;
+} */
 
 body {
-  
-  background-color: rgb(191, 191, 245);
-  /* background-color: rgb(205, 233, 241); */
+  background-image: url(./images/fruit.png);
+  /* background-color: rgb(216, 158, 0); */
 }

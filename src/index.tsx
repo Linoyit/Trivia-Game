@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -8,20 +8,33 @@ import { Provider } from 'react-redux'
 import { store } from './store/store';
 import Dashboard from './components/Dashboard';
 import Summary from './components/Summary';
+import { useAppDispatch } from './store/hooks';
+import { fetchTriviaQuestions } from './store/triviaSlice';
+
+const AppWithRouting: React.FC = () => {
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(fetchTriviaQuestions());
+	}, [dispatch]);
+  return (
+      <BrowserRouter>
+      <Routes>
+        <Route path="trivia" element={<App/>}>
+          <Route index element={<Dashboard/>} />
+          <Route path=":id" element={<Dashboard/>} />
+        </Route>
+        <Route path="/" element={<Navigate to="trivia/1"/>} />
+        <Route path="summary" element={<Summary/>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="trivia" element={<App/>}>
-              <Route index element={<Dashboard/>} />
-              <Route path=":id" element={<Dashboard/>} />
-            </Route>
-            <Route path="/" element={<Navigate to="trivia"/>} />
-            <Route path="summary" element={<Summary/>} />
-          </Routes>
-        </BrowserRouter>
+       <AppWithRouting/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

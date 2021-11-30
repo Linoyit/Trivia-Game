@@ -14,27 +14,31 @@ const NavBar: React.FC = () => {
         paddingRight: '10px',
     }
 
+    const navStyle = {
+        color: 'rgb(216, 158, 0)',
+    }
+
     return (
         <nav>
         <ul style={style}>
             <li style={listStyle}>
-            <NavLink to="/trivia/1">Q1</NavLink>
+            <NavLink style={navStyle} to="/trivia/1">Q1</NavLink>
             </li>
             {' '}|{' '}
             <li style={listStyle}>
-            <NavLink to="/trivia/2">Q2</NavLink>
+            <NavLink style={navStyle} to="/trivia/2">Q2</NavLink>
             </li>
             {' '}|{' '}
             <li style={listStyle}>
-            <NavLink to="/trivia/3">Q3</NavLink>
+            <NavLink style={navStyle} to="/trivia/3">Q3</NavLink>
             </li>
             {' '}|{' '}
             <li style={listStyle}>
-            <NavLink to="/trivia/4">Q4</NavLink>
+            <NavLink style={navStyle} to="/trivia/4">Q4</NavLink>
             </li>
             {' '}|{' '}
             <li style={listStyle}>
-            <NavLink to="/trivia/5">Q5</NavLink>
+            <NavLink style={navStyle} to="/trivia/5">Q5</NavLink>
             </li>
         </ul>
         </nav>
@@ -42,4 +46,5 @@ const NavBar: React.FC = () => {
 }
 
 export default NavBar
+
 

@@ -1,18 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { resetUserAnswers, setCount, setIndex } from "../store/triviaSlice";
+import { resetUserAnswers } from "../store/triviaSlice";
+import { Submit } from "../utils/emotions";
+import { useTriviaCollection } from "./useTriviaCollection";
 
 const Summary: React.FC = () => {
     const dispatch = useAppDispatch();
-    const length = useAppSelector((state) => state.trivia.items.length);
-    const count = useAppSelector((state) => state.trivia.count);
-    console.log("count", count);
+    const { length, userSelections, list } = useTriviaCollection();
     const navigate = useNavigate(); 
-
+    let count = 0;
+    
+    const calculateScore = () => {
+        let i = 0;
+        list.forEach((item) => {
+          if (userSelections[i++] === item.answerIndex) {
+            count += 1;
+          }
+        });
+     }
+     calculateScore();
     function handleClick() {
-        dispatch(setCount(0));
-        dispatch(setIndex(0));
         dispatch(resetUserAnswers());
         navigate(`../trivia`);
     }
@@ -30,7 +38,7 @@ const Summary: React.FC = () => {
         <div style={style}>
             <h1>Congratulations!!</h1>
             <p>You answered correctly on {count} / {length} Questions</p>
-            <button onClick={handleClick}>Play again</button>
+            <Submit onClick={handleClick}>Play again</Submit>
         </div>
     );
 }

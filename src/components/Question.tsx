@@ -1,25 +1,30 @@
 import React from 'react';
-import { useAppSelector } from '../store/hooks';
 import Option from './Option'
-import { H3 } from '../utils/emotions';
+import { H3, SummaryStyle } from '../utils/emotions';
+import { useTriviaCollection } from './useTriviaCollection';
+import { useParams } from 'react-router';
 
 interface IProps {
     onOptionClick: Function
 }
 
 const Question: React.FC<IProps> = ({onOptionClick}) => {
-    const list = useAppSelector((state) => state.trivia.items);
-    const index = useAppSelector((state) => state.trivia.index);
-    const triviaQuestion = list[index];
-    const answers = triviaQuestion.answers;
+    const { list } = useTriviaCollection();    
+    const params = useParams();
+    const numOfQuestion = params.id? parseInt(params.id) : 1;
+    const currentQuestion = list.find(p => p.id === '' + (numOfQuestion - 1));
+    if (!currentQuestion) {
+        return <SummaryStyle>Item {params.id} not found!</SummaryStyle>;
+    }
+    const answers = currentQuestion.answers;
 
     return (
-        <div>
-            <H3>{triviaQuestion.question}</H3>
+        <div >
+            <H3>{currentQuestion.question}</H3>
             <ul style={{listStyle: 'none'}}>
-                {
-                    answers.map((answer) =>
+                { answers.map((answer) =>
                     <Option
+                        numOfQuestion={numOfQuestion - 1}
                         text={answer} 
                         onOptionClick={onOptionClick} />)
                 }

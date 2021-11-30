@@ -17,7 +17,9 @@ const Navigate: React.FC<IProps> = ({onButtonClick}) => {
             <Button onClick={() => handleClick('back')}>Back</Button>
             <Button onClick={() => handleClick('next')}>Next</Button>
         </Div>
-        <Submit onClick={() => handleClick('submit')}>Submit</Submit>
+        <Div>
+            <Submit onClick={() => handleClick('submit')}>Submit</Submit>
+        </Div>
         </>
     );
 }

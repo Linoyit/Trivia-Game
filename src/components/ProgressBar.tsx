@@ -1,14 +1,16 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import { Text } from "../utils/emotions";
+import { useTriviaCollection } from "./useTriviaCollection";
 
 const ProgressBar: React.FC = () => {
-    const length = useAppSelector((state) => state.trivia.items.length);
-    const index = useAppSelector((state) => state.trivia.index);
-    
+    const params = useParams();
+    const numOfQuestion = params.id? parseInt(params.id) : 1;
+    const { length } = useTriviaCollection();
     return (
-       <div>
-           <Text> Question: {index + 1} / {length} </Text>
+       <div >
+           <Text> Question: {numOfQuestion} / {length} </Text>
        </div>
     );
 }
